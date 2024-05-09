@@ -21,7 +21,6 @@ const News3 = (props)=>{
 
         let parsedData = await data.json();
         props.setProgress(70);
-        console.log(parsedData)
 
         setArticles(parsedData.articles);
         settotalResults(parsedData.totalResults);
