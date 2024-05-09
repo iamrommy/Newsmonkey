@@ -1,22 +1,13 @@
 import React, {useState} from 'react'
 import Navbar from './components2/Navbar';
-// import News3 from './components2/News3'; //If you want infinite scroll (comment this to use News2)
-// import News2 from './components2/News2'; //If You want next and previous buttons (To use this replace <News3/> component from <News2/> 
-                                                                                    // & uncomment this line)
 import News3 from './components2/News3'
 import {
     BrowserRouter as Router,
     Routes,
     Route,
-    // Link
 } from "react-router-dom";
 import LoadingBar from 'react-top-loading-bar';
 import Footer from './components2/Footer';
-
-
-// This is App2 component which is converted into functional based component from App1 (which was class based component)
-//with the help of hooks
-//read About Hooks in ../Notes/Hooks.jpg
 
 const App = ()=>{
     
