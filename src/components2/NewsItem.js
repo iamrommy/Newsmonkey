@@ -4,7 +4,7 @@ const NewsItem = (props)=>{
     
     let {title, description, imageUrl, newsUrl, author, date, source} = props;
     return (
-        <div className="w-80 h-min bg-white border border-gray-200 rounded-lg shadow m-2 hover:scale-105 transition-all ease-in-out duration-300">
+        <div className="w-80 h-min bg-white border border-gray-200 rounded-lg shadow m-2 md:hover:scale-105 transition-all ease-in-out duration-300">
             <div className='flex justify-end'>
                 <span className="px-1 text-xs absolute font-bold -translate-y-3 text-white bg-red-500 border-2 border-white rounded-full">{source}</span>
             </div>
