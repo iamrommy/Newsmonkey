@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import MonkeyLogo from './assets/monkeyLogo.png'
+import Dropdown from './Dropdown';
 
-const Navbar = ()=>{
+const Navbar = ({setCountry, country})=>{
 
     const ChangeTitle = (title)=>{
         document.title = `NewsMonkey - ${title}`;
@@ -28,35 +29,39 @@ const Navbar = ()=>{
     return (
         <nav className="bg-black text-white sticky top-0 z-20">
             <div className="md:max-w-7xl md:mx-auto flex items-center justify-between h-16">
-                    <div className="flex items-center justify-between w-full">
-                        <div className='flex mx-2 items-center'>
-                           <img className='invert w-[30px] h-auto' src={MonkeyLogo} alt="NewsMonkey" />
-                           <h4 className="text-2xl font-bold px-4">NewsMonkey</h4>
+                <div className="flex items-center justify-between w-full">
+                    <div className="hamburger pl-3 inline-block cursor-pointer lg:hidden" onClick={ToggleHide}>
+                        <div id="hamburger" className="border border-white p-1">
+                            <div className="line h-1 w-7 bg-white my-1"></div>
+                            <div className="line h-1 w-7 bg-white my-1"></div>
+                            <div className="line h-1 w-7 bg-white my-1"></div>
                         </div>
-                        
-                        <div id='menu' className="mt-[26.8rem] md:mt-0 absolute z-10 md:z-0 md:static md:flex md:space-x-1 w-[100vw] md:w-min" hidden>
-                            <Link to='/' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium block text-center bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Home")}>Home</Link>
-                            <Link to='/business' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium block text-center bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Business")}>Business</Link>
-                            <Link to='/entertainment' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium text-center block bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Entertainment")}>Entertainment</Link>
-                            <Link to='/health' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium block text-center bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Health")}>Health</Link>
-                            <Link to='/science' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium block text-center bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Science")}>Science</Link>
-                            <Link to='/sports' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium block text-center bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Sports")}>Sports</Link>
-                            <Link to='/technology' className="hover:bg-gray-700 px-3 py-4 md:py-2 md:rounded-md text-sm font-medium block text-center bg-gray-800 md:bg-transparent" onClick={()=>ChangeTitle("Technology")}>Technology</Link>
+                        <div id="cross" hidden>
+                            <div className="w-6 h-1 bg-white rotate-45"></div>
+                            <div className="w-6 h-1 bg-white -rotate-45 -translate-y-1"></div>
                         </div>
-                        
-                        <div className="hamburger absolute right-3 inline-block cursor-pointer md:hidden" onClick={ToggleHide}>
-                            <div id="hamburger" className="border border-white p-1">
-                                <div className="line h-1 w-7 bg-white my-1"></div>
-                                <div className="line h-1 w-7 bg-white my-1"></div>
-                                <div className="line h-1 w-7 bg-white my-1"></div>
-                            </div>
-                            <div id="cross" hidden>
-                                <div className="w-6 h-1 bg-white rotate-45"></div>
-                                <div className="w-6 h-1 bg-white -rotate-45 -translate-y-1"></div>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <div className='flex mx-2 items-center'>
+                        <img className='invert w-[30px] h-auto hidden sm:block' src={MonkeyLogo} alt="NewsMonkey" />
+                        <h4 className="text-2xl font-bold px-4">NewsMonkey</h4>
+                    </div>
+
+                    <div id='menu' className="mt-[26rem] lg:mt-0 absolute z-10 lg:z-0 lg:static lg:flex lg:space-x-1 w-[100vw] lg:w-min" hidden>
+                        <Link to='/' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium block text-center bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Home")}>Home</Link>
+                        <Link to='/business' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium block text-center bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Business")}>Business</Link>
+                        <Link to='/entertainment' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium text-center block bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Entertainment")}>Entertainment</Link>
+                        <Link to='/health' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium block text-center bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Health")}>Health</Link>
+                        <Link to='/science' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium block text-center bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Science")}>Science</Link>
+                        <Link to='/sports' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium block text-center bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Sports")}>Sports</Link>
+                        <Link to='/technology' className="hover:bg-gray-700 px-3 py-4 lg:py-2 lg:rounded-md text-sm font-medium block text-center bg-gray-800 lg:bg-transparent" onClick={()=>ChangeTitle("Technology")}>Technology</Link>
+                    </div>
+
+
+                    <Dropdown setCountry={setCountry} country={country}/>
+                        
+
+                </div>
             </div>
         </nav>
     );
