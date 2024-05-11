@@ -21,6 +21,7 @@ const News3 = (props)=>{
 
         let parsedData = await data.json();
         props.setProgress(70);
+        console.log(parsedData)
 
         setArticles(parsedData.articles);
         settotalResults(parsedData.totalResults);
@@ -32,7 +33,7 @@ const News3 = (props)=>{
     useEffect(()=>{
         fetchData();
         // eslint-disable-next-line
-    }, []);
+    }, [props.country]);
     
     return (
         <div className='md:max-w-[90rem] mx-auto mb-8'>
@@ -40,6 +41,11 @@ const News3 = (props)=>{
 
             {loading && <Spinner/>} {/*This loader is added just to show loading at starting manually */}
 
+            {!loading && articles.length === 0 && 
+            <div className='text-xl md:text-5xl flex justify-center items-center w-full h-80'>
+                Sorry, No Data Found
+            </div>
+            }
                 
             <div className='flex flex-wrap justify-center mx-10'>
                 {
