@@ -13,7 +13,7 @@ const News3 = (props)=>{
     const fetchData = async ()=>{
         props.setProgress(10);
         let url = `https://gnews.io/api/v4/top-headlines?country=${props.country}&lang=en&category=${props.category}&apikey=${props.apikey}`;
-        // console.log(url)
+        console.log(url)
 
         let data = await fetch(url);
         props.setProgress(30);
