@@ -202,6 +202,12 @@ export function getProfile() {
         return;
       }
 
+      if(!response.data.user || response.data.user === undefined){
+        dispatch(setLoading(false))
+        toast.dismiss(toastId)
+        return;
+      }
+
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
