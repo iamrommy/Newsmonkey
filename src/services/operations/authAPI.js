@@ -181,7 +181,6 @@ export function logout(navigate) {
       toast.error("Logout Failed")
     }
 
-    navigate("/login")
   }
 }
 
