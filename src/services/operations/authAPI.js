@@ -12,6 +12,8 @@ const {
   LOGOUT_API
 } = endpoints;
 
+var flag = true;
+
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
@@ -134,7 +136,7 @@ export function login(email, password) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-
+      
       toast.success("Login Successful")
       dispatch(setToken(response.data.token))
       dispatch(setUser({ ...response.data.user}))
@@ -150,14 +152,9 @@ export function login(email, password) {
 }
 
 
-export function logout(navigate) {
+export function logout() {
   return async(dispatch) => {
     const toastId = toast.loading("Loading...")
-    dispatch(setToken(null))
-    dispatch(setUser(null))
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
-   
     try {
       const response = await apiConnector("GET", LOGOUT_API); 
 
@@ -174,13 +171,18 @@ export function logout(navigate) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
+      dispatch(setToken(null))
+      dispatch(setUser(null))
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
       toast.dismiss(toastId)
       toast.success('Logged out')
+      flag = true;
     } catch (error) {
       // console.log("LOGIN API ERROR............", error)
       toast.error("Logout Failed")
     }
-
+    
   }
 }
 
@@ -201,7 +203,7 @@ export function getProfile() {
         return;
       }
 
-      if(!response.data.user || response.data.user === undefined){
+      if(!response.data.user){
         dispatch(setLoading(false))
         toast.dismiss(toastId)
         return;
@@ -211,9 +213,12 @@ export function getProfile() {
         throw new Error(response.data.message)
       }
 
-      toast.success("Login Successful")
-      dispatch(setUser({ ...response.data.user}))
-      localStorage.setItem("user", JSON.stringify(response.data.user))
+      if(flag){
+        toast.success("Login Successful")
+        dispatch(setUser({ ...response.data.user}))
+        localStorage.setItem("user", JSON.stringify(response.data.user)) 
+      }
+      flag = false;
     } catch (error) {
       // console.log("LOGIN API ERROR............", error)
       toast.error("Login Failed")
