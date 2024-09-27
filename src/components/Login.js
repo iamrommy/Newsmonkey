@@ -34,17 +34,22 @@ const Login = () => {
     console.log("email and password after onsubmit, " + email + ", " + password);
   };
 
+  const handleSignIn = () => {
+    localStorage.setItem("fetchProfile", "true");
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/api/v1/auth/googlelogin`;
+  }
+
   useEffect(() => {
     const fetchProfile = async () => {
-
-      if (!user) {
-        dispatch(setLoading(true));
-        await dispatch(getProfile());
-        dispatch(setLoading(false));
-      }
+      dispatch(setLoading(true));
+      await dispatch(getProfile());
+      dispatch(setLoading(false));
+      localStorage.removeItem("fetchProfile");
     };
-  
-    fetchProfile();
+    
+    if (!user && localStorage.getItem("fetchProfile") === "true") {
+      fetchProfile();
+    }
     // eslint-disable-next-line
   }, []);
   
@@ -103,9 +108,9 @@ const Login = () => {
             <p className="w-full border-t border-[1px] absolute border-gray-300"></p>
             <span className="absolute text-gray-300 bg-white z-10 px-4">Or sign in with</span>
         </div>
-        <a href={`${process.env.REACT_APP_BASE_URL}/api/v1/auth/googlelogin`} className="p-1.5 mx-auto border-2 my-10 rounded-full text-xl border-gray-300 w-min cursor-pointer block">
+        <span onClick={handleSignIn} className="p-1.5 mx-auto border-2 my-10 rounded-full text-xl border-gray-300 w-min cursor-pointer block">
             <FcGoogle />
-        </a>
+        </span>
         <div className="flex justify-center text-sm font-semibold gap-1">
           <span>Don't have an account? </span><Link to="/signup" className="hover:underline cursor-pointer active:text-gray-700 hover:text-gray-800"> Register</Link>
         </div>
