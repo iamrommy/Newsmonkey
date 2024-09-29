@@ -63,14 +63,14 @@ const Signup = () => {
           />
         </label>
         <label>
-          <p className="text-sm font-medium mb-2">User Name</p>
+          <p className="text-sm font-medium mb-2">Name</p>
           <input
             required
             type="text"
             name="username"
             value={username}
             onChange={handleOnChange}
-            placeholder="Username"
+            placeholder="Name"
             className="w-full border-2 border-gray-100 rounded-[8px] p-4 text-sm mb-5"
           />
         </label>

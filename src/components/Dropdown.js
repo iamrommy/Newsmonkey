@@ -35,11 +35,10 @@ const countries = [
   
 
 const Dropdown = ({setCountry, country}) => {
-
+  // console.log()
   const handleChange = (e) => {
     setCountry(e.target.value);
   };
-
   return (
     <div className='text-black pr-3 '>
       {/* <label htmlFor="country" className='text-white'>Country:</label> */}

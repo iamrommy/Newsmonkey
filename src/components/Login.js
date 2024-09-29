@@ -101,6 +101,13 @@ const Login = () => {
               )}
             </span>
           </label>
+          <div className="flex justify-end">
+          <Link to="/reset-password">
+            <span className="mt-1 ml-auto max-w-max text-[14px] hover:underline">
+              Forgot Password
+            </span>
+          </Link>
+        </div>
           <button className="w-full bg-black p-4 mt-10 mb-4 rounded-full text-white active:bg-gray-700 hover:bg-gray-800" type="submit">Sign In</button>
         </form>
 

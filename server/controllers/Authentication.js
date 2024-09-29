@@ -1,9 +1,13 @@
 const User = require('../models/User');
 const OTP = require('../models/OTP');
 
+const { uploadImageToCloudinary } = require('../utils/imageUploader');
+const { deleteImageFromCloudinary } = require('../utils/deleteImage');
 const otpGenerator = require('otp-generator');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
+const mailSender = require('../utils/mailSender');
+const crypto = require('crypto');
 
 require('dotenv').config();
 
@@ -131,6 +135,8 @@ exports.signUp = async (req, res)=>{
             username,
             email,
             password: hashedPassword,
+            image: `https://api.dicebear.com/5.x/initials/svg?seed=${username}`,
+            preferedCountry: 'us'
         });
 
         user = await User.findById(user._id);
@@ -256,3 +262,338 @@ exports.logout = (req, res, next) => {
     });
   };
   
+exports.updateProfilePicture = async(req, res)=>{
+    try{
+        //fetch data
+        const profilePicture = req.files.displayPicture;
+        const email = req.body.email;
+
+        //validation
+        const supportedTypes = ['jpg', 'jpeg', 'png'];
+        const fileType = profilePicture.name.split('.')[1].toLowerCase();
+        //if file formated is not supported
+        if(!supportedTypes.includes(fileType)){
+            return res.json({
+                success: false,
+                message: 'File format not supported'
+            });
+        }
+        
+        //file Upload
+        const image = await uploadImageToCloudinary(
+            profilePicture,
+            process.env.FOLDER_NAME,
+            1000,
+            1000
+        );
+        // console.log(image);
+        
+        if(req.body.image && req.body.image.includes('cloudinary')){
+            const Cloudinaryres = await deleteImageFromCloudinary(req.body.image ,process.env.FOLDER_NAME);
+            console.log(Cloudinaryres);
+        }
+
+        //url update in DB
+        const updatedProfile = await User.findOneAndUpdate(
+            { email: email },
+            { image: image.secure_url },
+            { new: true }
+        );
+
+        //return response
+        res.send({
+            success: true,
+            message: `Image Updated successfully`,
+            data: updatedProfile,
+        });
+    }
+    catch(error){
+        console.log('Error in updating Profile picture', error);
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        });
+    }
+};
+
+exports.removeProfilePicture = async(req, res)=>{
+    try{
+        //fetch id
+        const email = req.body.email;
+        
+        //get user details
+        const userDetails = await User.findOne({email : email});
+        if(!userDetails){
+            return res.status(404).json({
+                success:false,
+                message:"User not found"
+            });
+        }
+        //delete user image from cloudinary
+        if(userDetails.image.includes('cloudinary')){
+            const  response = await deleteImageFromCloudinary(userDetails.image ,process.env.FOLDER_NAME);
+            console.log(response);
+        }
+
+        userDetails.image = `https://api.dicebear.com/5.x/initials/svg?seed=${userDetails.username}`;
+        await userDetails.save();
+
+        res.json({
+            success: true,
+            message: 'User image is removed successfully',
+            user: userDetails
+        });
+    }
+    catch(error){
+        console.log('Error in removing Profile picture', error);
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        });
+    }
+}
+
+exports.setPreferedCountry = async(req, res)=>{
+    try{
+        //fetch id
+        const email = req.body.email;
+        const country = req.body.country;
+        //get user details
+        const userDetails = await User.findOne({email : email});
+        if(!userDetails){
+            return res.status(404).json({
+                success:false,
+                message:"User not found"
+            });
+        }
+        const user = await User.findOneAndUpdate(
+            {email: email},
+            {preferedCountry: country}, 
+            {new: true}
+        )
+        res.json({
+            success: true,
+            message: 'prefered country is set successfully',
+            user: user
+        });
+    }
+    catch(error){
+        console.log('Error in setting preferd country', error);
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        });
+    }
+}
+
+exports.changePassword = async(req,res)=>{
+
+    try{
+        //fetch data
+        const {oldPassword, newPassword, email} = req.body;
+        //validate data
+        if(!oldPassword || !newPassword){
+            return res.status(403).json({
+                success:false,
+                message:'All fields are required, Please try again'
+            });
+        }
+
+        const user = await User.findOne({email});
+
+        if(!user?.password){
+            return res.json({
+                success:false,
+                message : "Google accounts have No password. Click reset Password to set a Password", 
+            });
+        }
+
+        const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+        if(!isPasswordMatch){
+            return res.json({
+                success:false,
+                message:'Current Password is Wrong, Try again'
+            });
+        }
+    
+        const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // create entry in DB
+        const updatedUserDetails = await User.findOneAndUpdate(
+                                    {email: user.email},
+                                    {
+                                        password: newHashedPassword
+                                    },
+                                    {new:true}      
+                                );
+
+        //send mail
+        try{
+            const emailResponse = await mailSender(
+                updatedUserDetails.email,
+                "Password for your account has been updated",
+                `Password updated successfully for ${updatedUserDetails.username}`
+                )
+                console.log("Email sent successfully:", emailResponse.response)
+
+        }
+        catch(error){
+            console.log("error occured while sending mails", error);
+            throw error;
+        }
+        //return response
+        return res.json({
+            success: true,
+            message: 'Your password is updated successfully'
+        });
+
+    }
+    catch(error){
+        console.log('Error in Changing password ', error);
+        return res.status(400).json({
+            success:true,
+            message: error.message
+        });
+    }   
+};
+
+exports.deleteProfile = async(req, res)=>{
+    try{
+        const email = req.body.email;
+
+        // validation
+        const userDetails = await User.findOne({email: email});
+        if(!userDetails){
+            return res.status(404).json({
+                success:false,
+                message:"User not found"
+            });
+        }
+        //delete user image from cloudinary
+        if(userDetails.image){
+            const Cloudinaryres = await deleteImageFromCloudinary(userDetails.image ,process.env.FOLDER_NAME);
+            // console.log(Cloudinaryres);
+        }
+
+        //delete user
+        await User.findOneAndDelete({email: email});
+
+        // return response
+        return res.status(200).json({
+            success:true,
+            message: 'Account deleted Successfully'
+        });
+    }
+    catch(error){
+        return res.status(500).json({
+            success:false,
+            message:'User cannot be deleted successfully'
+        });
+    }
+}
+
+exports.resetPasswordToken = async(req,res)=>{
+    try {
+        //fetch email from request's body
+        const email = req.body.email;
+        //check user for this email, email verification
+        const user = await User.findOne({email:email});
+        if(!user){
+            return res.json({
+                success:false,
+                message:"Your Email is not registered with us"
+            });
+        }
+
+        //generate token
+        const token = crypto.randomUUID();
+
+        //update user by adding token and expiration time
+        const updatedDetails = await User.findOneAndUpdate(
+                                                {email:email},
+                                                {
+                                                    token:token,
+                                                    resetPasswordExpires: Date.now() + 5*60*1000,
+                                                },
+                                                {new:true}
+                                            );
+
+        //create url
+        const url = `${process.env.FRONTEND_URL}/update-password/${token}`
+        //send mail containing the url
+        await mailSender(email, 'Reset Password | NewsMonkey', `Your Password Reset Link :${url}`);
+
+        //return response
+        return res.json({
+            success:true,
+            message:'Email sent successfully, please check email and change password',
+            url
+        });    
+    } 
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:"something went wrong while reset Password mail"
+        });
+    }
+
+};
+
+//reset password
+exports.resetPassword = async (req,res)=>{
+    try {
+        //data fetch
+        const {password, confirmPassword, token} = req.body;
+
+        //validation
+        if(password !== confirmPassword){
+            return res.json({
+                success:false,
+                message:'Password not matching'
+            });
+        }
+        //get userdetails from db using token
+        const userDetails = await User.findOne({token:token});
+        console.log('userDetails', userDetails)
+        
+        //if no entry - invalid token
+        if(!userDetails){
+            return res.json({
+                success:false,
+                message:"user is invalid"
+            });
+        }
+        
+        //token time expired
+        if(userDetails.resetPasswordExpires < Date.now() || userDetails === undefined){
+            return res.json({
+                success:false,
+                message:"Token is expired, please regenerate token"
+            });
+        }
+        //hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        //update password
+        await User.findOneAndUpdate(
+            { email: userDetails?.email },
+            {
+              $set: { password: hashedPassword, token: null },
+            },
+            { new: true }
+        );
+          
+        //return response
+        return res.status(200).json({
+            success:true,
+            message: 'Password reset successfull'
+        });
+    
+    } 
+    catch (error) {
+        return res.status(500).json({
+            success:false,
+            message:'Something went wrong while resetting password'
+        });
+    }
+};

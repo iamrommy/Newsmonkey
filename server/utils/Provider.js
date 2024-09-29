@@ -24,9 +24,10 @@ exports.connectPassport = () => {
           const newUser = await User.create({
             googleId: profile.id,
             username: profile.displayName,
-            email: profile.email
+            email: profile.email,
+            image: `https://api.dicebear.com/5.x/initials/svg?seed=${profile.displayName}`,
+            preferedCountry: 'us'
           });
-
           return done(null, newUser);
         }
 

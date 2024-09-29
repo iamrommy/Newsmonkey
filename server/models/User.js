@@ -16,8 +16,14 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
     },
+    image:{
+        type: String,
+    },
     token:{
         type:String
+    },
+    preferedCountry: {
+        type: String
     }
 
 });

@@ -13,12 +13,15 @@ import VerifyEmail from './components/VerifyEmail';
 import OpenRoute from './components/OpenRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
+import { useSelector } from 'react-redux';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword'
 
 const App = ()=>{
     
     const [progress, setProgress] = useState(0);
-  
-    const [country, setCountry] = useState('us');
+    const {user} = useSelector((state)=>state.auth);
+    const [country, setCountry] = useState(user?.preferedCountry || 'us');
     // const [country, setCountry] = useState("in");
 
     const ApiKey = process.env.REACT_APP_NEWS_API;
@@ -42,6 +45,8 @@ const App = ()=>{
                 <Route exact path="/login" element={<OpenRoute><Login/></OpenRoute>} />
                 <Route exact path="/signup" element={<OpenRoute><Signup/></OpenRoute>} />
                 <Route exact path="/verify-email" element={<OpenRoute><VerifyEmail/></OpenRoute>} />
+                <Route exact path="/reset-password" element={<ForgotPassword/>}/>
+                <Route exact path="/update-password/:id" element={<ResetPassword/>}/>
                 <Route exact path="/profile" 
                     element={
                         <ProtectedRoute>

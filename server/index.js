@@ -4,7 +4,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const userRoutes = require('./routes/user');
 const connectPassport = require('./utils/Provider.js').connectPassport;
+const {cloudinaryConnect} = require('./config/cloudinary');
 const passport = require('passport');
+const fileUpload = require('express-fileupload')
 const errorMiddleware = require("./middlewares/errorMiddleware").errorMiddleware;
 const session = require('express-session');
 
@@ -24,6 +26,19 @@ app.use(
         methods: ["GET", "POST", "PUT", "DELETE"]
     })
 );
+
+app.use(
+    fileUpload({
+        useTempFiles:true,
+        tempFileDir:'/tmp'
+    })
+);
+app.use(
+    express.urlencoded({
+      extended: true,
+    })
+);
+
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -44,6 +59,8 @@ app.use(errorMiddleware);
 app.enable('trust proxy') 
     
 connectPassport();
+//cloudinary connect
+cloudinaryConnect();
 
 // Set Access-Control-Allow-Credentials header
 app.use((req, res, next) => {

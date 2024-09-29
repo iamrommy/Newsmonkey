@@ -8,6 +8,13 @@ const {
   sendOTP,
   myProfile,
   logout,
+  updateProfilePicture,
+  removeProfilePicture,
+  setPreferedCountry,
+  changePassword,
+  deleteProfile,
+  resetPasswordToken,
+  resetPassword
 } = require("../controllers/Authentication");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -27,5 +34,12 @@ router.get(
 
 router.get('/me', isAuthenticated, myProfile);
 router.get('/logout', logout);
+router.put('/updateDisplayPicture', updateProfilePicture);
+router.put('/removeProfilePicture', removeProfilePicture);
+router.put('/setPreferedCountry', setPreferedCountry);
+router.put('/changePassword', changePassword);
+router.delete('/deleteProfile', deleteProfile);
+router.post('/reset-password-token', resetPasswordToken);
+router.post('/reset-password', resetPassword)
 
 module.exports = router;
