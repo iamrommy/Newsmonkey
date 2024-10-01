@@ -463,6 +463,7 @@ exports.deleteProfile = async(req, res)=>{
 
         // validation
         const userDetails = await User.findOne({email: email});
+        console.log('deleteProfileapi',userDetails)
         if(!userDetails){
             return res.status(404).json({
                 success:false,
@@ -470,7 +471,7 @@ exports.deleteProfile = async(req, res)=>{
             });
         }
         //delete user image from cloudinary
-        if(userDetails.image){
+        if(userDetails.image && userDetails?.image?.includes('cloudinary')){
             const Cloudinaryres = await deleteImageFromCloudinary(userDetails.image ,process.env.FOLDER_NAME);
             // console.log(Cloudinaryres);
         }
