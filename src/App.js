@@ -54,7 +54,7 @@ const App = ()=>{
                         </ProtectedRoute>
                     } />
             </Routes>
-            <Footer/>
+            <Footer progress={progress}/>
         </div>
     )
 }
