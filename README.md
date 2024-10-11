@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+**<h1>NewsMonkey - A Web-Based News Aggregator [(Website
+Link)](https://mynewsmonkey.vercel.app)</h1>**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="./public/media/image1.png"
+style="width:4.594864in; height:7.016207in;" />
 
-## Available Scripts
+NewsMonkey
 
-In the project directory, you can run:
+An Online News App
 
-### `npm start`
+# Project Description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+NewsMonkey is a web application that provides users with the latest news from around the world. The app utilizes the NewsAPI to gather news articles from a variety of reputable sources and presents them to users in an easy-to-use interface. One of the key features of NewsMonkey is its advanced filtering options, which allow users to sort news articles by category, such as sports, entertainment, politics, and more. The app also incorporates infinite scrolling functionality, which enables users to seamlessly browse through a virtually endless stream of news articles without interruption.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<b>Objective:</b> It is to develop a web-based news aggregator that allows users to access curated news from multiple sources. Users will be able to choose news categories (e.g., sports, technology, politics) based on their interests, search for specific news items using keywords, and read brief summaries and navigate to the full articles.
 
-### `npm test`
+<b>Scope:</b> The project involves front-end development (for user interaction), back-end development (for API integration), and the integration of a news API for fetching real-time data. The platform will be responsive, offering a seamless experience across different devices (mobile, tablet, desktop).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# System Architecture
 
-### `npm run build`
+The StudyCraze ed-tech platform consists of three main components: the
+front end, the back end, and the database. The platform follows a
+client-server architecture, with the front end serving as the client and
+the back end and database serving as the server.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Front-end
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The front end of the platform is built using ReactJS, which is a popular JavaScript library for building user interfaces. ReactJS allows for the creation of dynamic and responsive user interfaces, which are critical for providing an engaging learning experience to the students. The front end communicates with the back end using RESTful API calls.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Back-end
 
-### `npm run eject`
+The back end of the platform is built using NodeJS and ExpressJS, which are popular frameworks for building scalable and robust server-side applications. The back end provides APIs for the front end to consume, which include functionalities such as user authentication, profile setup and password change.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Database
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The database for the platform is built using MongoDB, which is a NoSQL database that provides a flexible and scalable data storage solution. MongoDB allows for the storage of unstructured and semi-structured data, which is useful for storing user content such as images.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
