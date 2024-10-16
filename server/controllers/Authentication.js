@@ -35,6 +35,8 @@ exports.sendOTP = async(req, res) =>{
             });
         }
 
+        await OTP.findOneAndDelete({email: email});
+
         //generate otp
         let otp = otpGenerator.generate(6, {
             upperCaseAlphabets: false,
