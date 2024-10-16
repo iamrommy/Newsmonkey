@@ -38,7 +38,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="mt-5 mb-10 w-full p-5 mx-auto max-w-3xl">
+    <div className="mb-10 w-full p-5 mx-auto max-w-3xl">
       <div className="mb-6">
         <h1 className="text-4xl font-semibold mb-2 w-[70%]">
           Create your new account
