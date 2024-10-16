@@ -43,9 +43,9 @@ const News3 = (props)=>{
             {loading && <Spinner/>} {/*This loader is added just to show loading at starting manually */}
 
             {!loading && articles.length === 0 && 
-            <div className='text-xl md:text-5xl flex justify-center items-center w-full h-80'>
-                Sorry, No Data Found
-            </div>
+            <div className='text-xl md:text-5xl flex justify-center items-center w-full h-[calc(100vh-264px)]'>
+            Sorry, No Data Found
+            </div>          
             }
                 
             <div className='flex flex-wrap justify-center mx-10'>
