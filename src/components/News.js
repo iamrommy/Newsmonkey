@@ -42,15 +42,15 @@ const News3 = (props)=>{
             </div>
             {loading && <Spinner/>} {/*This loader is added just to show loading at starting manually */}
 
-            {!loading && articles.length === 0 && 
+            {!loading && !articles?.length && 
             <div className='text-xl md:text-5xl flex justify-center items-center w-full h-[calc(100vh-264px)]'>
-            Sorry, No Data Found
+                Sorry, No Data Found
             </div>          
             }
                 
             <div className='flex flex-wrap justify-center mx-10'>
                 {
-                    articles.map((element,index)=>{
+                    articles?.map((element,index)=>{
                         return <NewsItem key={index} title={element.title} description={element.description?element.description:element.title} imageUrl={element.image?element.image: black} newsUrl={element.url} author={element.author?element.author:"Unknown"} date={element.publishedAt} source={element.source.name}/>
                     })
                 }
