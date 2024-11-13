@@ -14,4 +14,7 @@ export const endpoints = {
   DELETE_PROFILE_API: BASE_URL + "deleteProfile",
   RESETPASSTOKEN_API: BASE_URL + "reset-password-token",
   RESETPASSWORD_API: BASE_URL + "reset-password",
+  ADD_TO_BOOKMARKS_API: BASE_URL + "addToBookmarks",
+  REMOVE_FROM_BOOKMARKS_API: BASE_URL + "removeFromBookmarks",
+  FETCH_BOOKMARKS_API: BASE_URL + "fetchBookmarks"
 }

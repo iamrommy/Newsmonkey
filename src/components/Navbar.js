@@ -5,6 +5,7 @@ import MonkeyLogo from '../assets/monkeyLogo.png'
 import { useSelector } from 'react-redux';
 import { FaUser } from "react-icons/fa";
 import MenuSlider from './MenuSlider';
+import { FaBookmark } from "react-icons/fa";
 
 const Navbar = ()=>{
 
@@ -53,12 +54,19 @@ const Navbar = ()=>{
                     </div>
 
                         {
-                            user?( 
-                                <div className='border-2 border-white hover:bg-gray-800 active:bg-gray-700 p-1 text-white cursor-pointer rounded-xl text-2xl mx-3'>
-                                    <Link to="/profile"> <img src={user.image} alt="U" className='h-8 w-8 rounded-lg' /></Link> 
+                            user?(
+                                <div className='flex items-center justify-center mx-3 gap-3'> 
+                                    <div className='border-2 border-white hover:bg-gray-800 active:bg-gray-700 p-1 text-white cursor-pointer rounded-xl'>
+                                        <Link to="/profile"> <img src={user.image} alt="U" className='h-6 w-6 rounded-lg' /></Link> 
+                                    </div>
+                                    <div className='text-xl relative'>
+                                        <Link to="/bookmarks"><FaBookmark/></Link>
+                                        { user?.Bookmarks.length !==0 && <span className='absolute -top-1 -right-2 bg-red-600 border-white border-[1px] text-xs px-1 font-bold flex justify-center items-center animate-bounce rounded-full text-white'> {user?.Bookmarks.length} </span>
+                                        }
+                                    </div>
                                 </div>
                             ):(
-                                <div className='border-2 border-white p-1 hover:bg-gray-800 active:bg-gray-700 cursor-pointer rounded-lg text-2xl mx-3'>
+                                <div className='border-2 border-white p-1 hover:bg-gray-800 active:bg-gray-700 cursor-pointer rounded-lg text-xl mx-3'>
                                     <Link to="/login" ><FaUser/></Link> 
                                 </div>
                             )

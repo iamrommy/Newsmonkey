@@ -16,7 +16,9 @@ const {
   CHANGE_PASSWORD_API,
   DELETE_PROFILE_API,
   RESETPASSTOKEN_API,
-  RESETPASSWORD_API
+  RESETPASSWORD_API,
+  ADD_TO_BOOKMARKS_API,
+  REMOVE_FROM_BOOKMARKS_API
 } = endpoints;
 
 
@@ -440,6 +442,78 @@ export function resetPassword(password, confirmPassword, token, navigate){
     catch(error){
       // console.log("RESET PASSWORD TOKEN Error", error);
       toast.error("Unable to Reset Password");
+      toast.dismiss(toastId);
+    }
+  }
+}
+
+export function addToBookmarks(article, userId){
+  const toastId = toast.loading("Loading...")
+  return async(dispatch) =>{
+    try{
+      const response = await apiConnector('POST', ADD_TO_BOOKMARKS_API, {article, userId});
+
+      // console.log("ADDED TO BOOKMARKS ...", response);
+
+      const message = response?.data?.message;
+      // console.log(message);
+
+      if(!response?.data?.success){
+        toast.error('Error in adding to bookmarks');
+        throw new Error(response.data.message);
+      }
+
+      if(message === "Already Present in bookmarks"){
+        toast.success(message);
+        toast.dismiss(toastId);
+        return;
+      }
+      
+      dispatch(setUser(response.data.user));
+      localStorage.setItem('user',  JSON.stringify(response.data.user));
+      // console.log(response.data.user);
+
+      toast.success("Added to Bookmarks");
+      toast.dismiss(toastId);
+    }
+    catch(error){
+      toast.error("Unable to add to Bookmarks");
+      toast.dismiss(toastId);
+    }
+  }
+}
+
+export function removeFromBookmarks(title, userId){
+  const toastId = toast.loading("Loading...")
+  return async(dispatch) =>{
+    try{
+      const response = await apiConnector('POST', REMOVE_FROM_BOOKMARKS_API, {title, userId});
+
+      // console.log("ADDED TO BOOKMARKS ...", response);
+
+      const message = response?.data?.message;
+      // console.log(message);
+      
+      if(!response?.data?.success){
+        toast.error('Error in removing from bookmarks');
+        throw new Error(response.data.message);
+      }
+      
+      if(message === "Not present in Bookmarks"){
+        toast.error(message);
+        toast.dismiss(toastId);
+        return;
+      }
+
+      dispatch(setUser(response.data.user));
+      localStorage.setItem('user',  JSON.stringify(response.data.user));
+      // console.log(response.data.user);
+
+      toast.success("Removed from Bookmarks");
+      toast.dismiss(toastId);
+    }
+    catch(error){
+      toast.error("Unable to remove from Bookmarks");
       toast.dismiss(toastId);
     }
   }

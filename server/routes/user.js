@@ -17,6 +17,7 @@ const {
   resetPassword
 } = require("../controllers/Authentication");
 const { isAuthenticated } = require("../middlewares/auth");
+const { addToBookmarks, removeFromBookmarks, fetchBookmarks } = require("../controllers/Bookmarks");
 
 
 router.post("/login", logIn);
@@ -41,5 +42,7 @@ router.put('/changePassword', changePassword);
 router.delete('/deleteProfile', deleteProfile);
 router.post('/reset-password-token', resetPasswordToken);
 router.post('/reset-password', resetPassword)
+router.post('/addToBookmarks', addToBookmarks);
+router.post('/removeFromBookmarks', removeFromBookmarks);
 
 module.exports = router;

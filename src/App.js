@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Navbar from './components/Navbar';
 import News from './components/News'
 import {
@@ -16,13 +16,17 @@ import Profile from './components/Profile';
 import { useSelector } from 'react-redux';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword'
+import Bookmarks from './components/Bookmarks';
 
 const App = ()=>{
     
     const [progress, setProgress] = useState(0);
     const {user} = useSelector((state)=>state.auth);
     const [country, setCountry] = useState(user?.preferedCountry || 'us');
-    // const [country, setCountry] = useState("in");
+
+    useEffect(() => {
+        setCountry(user?.preferedCountry); 
+      }, [user]);
 
     const ApiKey = process.env.REACT_APP_NEWS_API;
 
@@ -53,6 +57,12 @@ const App = ()=>{
                             <Profile/>
                         </ProtectedRoute>
                     } />
+                <Route exact path="/bookmarks" 
+                        element={
+                        <ProtectedRoute>
+                            <Bookmarks/>
+                        </ProtectedRoute>
+                    }/>
             </Routes>
             <Footer progress={progress}/>
         </div>

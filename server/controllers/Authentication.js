@@ -173,7 +173,7 @@ exports.logIn = async (req, res)=>{
         }
 
         //user check exist or not
-        const user = await User.findOne({email});
+        const user = await User.findOne({email})?.populate('Bookmarks')?.exec();
         if(!user){
             return res.json({
                 success:false,
@@ -234,9 +234,13 @@ exports.logIn = async (req, res)=>{
 };
 
 exports.myProfile = async(req, res)=>{
+
+    const userDetails = await User.findById(req.user?._id).populate('Bookmarks').exec();
+    // console.log(userDetails);
+
     res.status(200).json({
         success: true,
-        user: req.user,
+        user: userDetails,
     });
 }
 
@@ -433,7 +437,7 @@ exports.changePassword = async(req,res)=>{
         try{
             const emailResponse = await mailSender(
                 updatedUserDetails.email,
-                "Password for your account has been updated",
+                "NewsMonkey | Password for your account has been updated",
                 `Password updated successfully for ${updatedUserDetails.username}`
                 )
                 console.log("Email sent successfully:", emailResponse.response)

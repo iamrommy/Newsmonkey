@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
     image:{
         type: String,
     },
+    Bookmarks:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Bookmark",
+        }
+    ],
     token:{
         type:String
     },
