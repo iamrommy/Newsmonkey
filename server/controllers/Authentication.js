@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const OTP = require('../models/OTP');
+const Bookmark = require('../models/Bookmark');
 
 const { uploadImageToCloudinary } = require('../utils/imageUploader');
 const { deleteImageFromCloudinary } = require('../utils/deleteImage');
@@ -480,6 +481,10 @@ exports.deleteProfile = async(req, res)=>{
         if(userDetails.image && userDetails?.image?.includes('cloudinary')){
             const Cloudinaryres = await deleteImageFromCloudinary(userDetails.image ,process.env.FOLDER_NAME);
             // console.log(Cloudinaryres);
+        }
+
+        for (const bookmarkId of userDetails.Bookmarks) {
+            await Bookmark.findByIdAndDelete(bookmarkId);
         }
 
         //delete user

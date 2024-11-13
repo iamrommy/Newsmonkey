@@ -26,7 +26,7 @@ const Signup = () => {
     dispatch(setSignupData(formData));
     dispatch(sendOtp(formData.email, navigate));
 
-    console.log("email and password after onsubmit",email,password,username);
+    // console.log("email and password after onsubmit",email,password,username);
   }
 
   const handleOnChange = (event) => {

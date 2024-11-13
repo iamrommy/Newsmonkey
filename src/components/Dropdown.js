@@ -35,7 +35,6 @@ const countries = [
   
 
 const Dropdown = ({setCountry, country}) => {
-  // console.log()
   const handleChange = (e) => {
     setCountry(e.target.value);
   };

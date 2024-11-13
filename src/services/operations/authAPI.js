@@ -29,9 +29,9 @@ export function sendOtp(email, navigate) {
     try {
       const response = await apiConnector("POST", SENDOTP_API, {email})
       
-      console.log("SENDOTP API RESPONSE............", response)
+      // console.log("SENDOTP API RESPONSE............", response)
 
-      console.log(response.data.success);
+      // console.log(response.data.success);
 
       const message = response.data.message;
 
@@ -166,7 +166,7 @@ export function logout() {
     try {
       const response = await apiConnector("GET", LOGOUT_API); 
 
-      console.log("LOGOUT API RESPONSE............", response)
+      // console.log("LOGOUT API RESPONSE............", response)
 
       const message = response.data.message;
 
@@ -199,7 +199,7 @@ export function getProfile() {
     const toastId = toast.loading("Loading...")
     try {
       const response = await apiConnector("GET", GET_PROFILE); 
-      console.log("LOGIN API RESPONSE............", response)
+      // console.log("LOGIN API RESPONSE............", response)
 
       const message = response.data.message;
 
