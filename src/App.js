@@ -26,7 +26,7 @@ const App = ()=>{
 
     useEffect(() => {
         setCountry(user?.preferedCountry); 
-      }, [user]);
+      }, [user?.preferedCountry]);
 
     const ApiKey = process.env.REACT_APP_NEWS_API;
 

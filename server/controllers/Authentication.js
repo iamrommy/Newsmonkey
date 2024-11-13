@@ -305,7 +305,7 @@ exports.updateProfilePicture = async(req, res)=>{
             { email: email },
             { image: image.secure_url },
             { new: true }
-        );
+        ).populate('Bookmarks').exec();
 
         //return response
         res.send({
@@ -329,7 +329,7 @@ exports.removeProfilePicture = async(req, res)=>{
         const email = req.body.email;
         
         //get user details
-        const userDetails = await User.findOne({email : email});
+        const userDetails = await User.findOne({email : email}).populate('Bookmarks').exec();
         if(!userDetails){
             return res.status(404).json({
                 success:false,
@@ -377,7 +377,8 @@ exports.setPreferedCountry = async(req, res)=>{
             {email: email},
             {preferedCountry: country}, 
             {new: true}
-        )
+        ).populate('Bookmarks').exec();
+
         res.json({
             success: true,
             message: 'prefered country is set successfully',
