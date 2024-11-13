@@ -15,7 +15,7 @@ exports.addToBookmarks = async(req, res)=>{
             });
         }
 
-        const isPresent = await Bookmark.findOne({title: article.title});
+        const isPresent = await Bookmark.findOne({title: article.title, user:userId});
         if(isPresent){
             return res.json({
                 success: true,
@@ -76,7 +76,7 @@ exports.removeFromBookmarks = async(req, res)=>{
             });
         }
 
-        const isPresent = await Bookmark.findOne({title: title});
+        const isPresent = await Bookmark.findOne({title: title, user: userId});
         if(!isPresent){
             return res.json({
                 success: true,
@@ -85,7 +85,7 @@ exports.removeFromBookmarks = async(req, res)=>{
             });
         }
 
-        const bookmark = await Bookmark.findOneAndDelete({title: title});
+        const bookmark = await Bookmark.findOneAndDelete({title: title, user: userId});
 
         await User.findByIdAndUpdate(
             {_id:userId},
