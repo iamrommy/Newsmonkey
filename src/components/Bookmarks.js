@@ -21,7 +21,7 @@ const Bookmarks = () => {
               ))
             ) : (
               <div className='text-2xl'>
-                Bookmarks are Empty :(
+                Bookmarks are Empty :( 
               </div>
             )
           }
