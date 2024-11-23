@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link} from "react-router-dom";
 import MonkeyLogo from '../assets/monkeyLogo.png'
-// import { FiLogIn } from "react-icons/fi";
 import { useSelector } from 'react-redux';
 import { FaUser } from "react-icons/fa";
 import MenuSlider from './MenuSlider';
@@ -14,23 +13,6 @@ const Navbar = ()=>{
     const ChangeTitle = (title)=>{
         document.title = `NewsMonkey - ${title}`;
     }
-
-    // function ToggleHide(){
-    //     let menu = document.getElementById('menu');
-    //     let cross = document.getElementById('cross');
-    //     let hamburger = document.getElementById('hamburger');
-        
-    //     if(menu.hasAttribute('hidden')){
-    //         menu.removeAttribute('hidden');
-    //         cross.removeAttribute('hidden');
-    //         hamburger.setAttribute('hidden', true);
-    //     }
-    //     else{
-    //         menu.setAttribute('hidden', true);
-    //         cross.setAttribute('hidden', true);
-    //         hamburger.removeAttribute('hidden');
-    //     }
-    // }
 
     return (
         <nav className="bg-black text-white sticky top-0 z-20">

@@ -5,7 +5,7 @@ import Spinner from './Spinner';
 import PropTypes from 'prop-types'
 import Dropdown from './Dropdown'
 
-const News3 = (props)=>{
+const News = (props)=>{
     // console.log(props.apikey)
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -61,16 +61,16 @@ const News3 = (props)=>{
 }
 
 
-News3.defaultProps = {
+News.defaultProps = {
     country: 'in',
     pageSize: 8,
     category: 'general',
 }
 
-News3.propTypes = {
+News.propTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
     category: PropTypes.string,
 }
 
-export default News3;
+export default News;
